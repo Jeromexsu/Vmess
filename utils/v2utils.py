@@ -1,6 +1,40 @@
 import argparse
 import v2client
 from utils import mail
+import json
+def send_notice(id):
+    url = "https://jeremysu.xyz"
+    text = "<html>\
+    <body>\
+        <p>你好，你的JMess已注册成功。下方是你的uuid</p>\
+        <p style=\"text-align: center;\"><b>%s</b></p>\
+        <p style=\"color: brown;\">⚠️注意：无论在任何情况下，都不要泄露你的id。</p>\
+        <p>📎附件是你可能用到的文件，使用方法参见<a href= %s>使用教程</a></p>\
+    </body>\
+    </html>" % (id,url)
+
+    #write shadowrocket
+    shr_conf_path = "../conf/shadowrocket.json"
+    with open(shr_conf_path,"r") as shrfile:
+        js = json.load(shrfile)
+    js[0]["uuid"] = id
+    with open(shr_conf_path,"w") as shrfile:
+        json.dump(js,shrfile)
+    
+    #write clashx
+    clashx_temp_path = "../conf/JMess_ClashX_template.yaml"
+    clashx_conf_path = "../conf/JMess_ClashX.yaml"
+    with open(clashx_temp_path,"r") as temp:
+        lines = temp.readlines()
+        for (index,line) in enumerate(lines):
+            if line == '    uuid:\n':
+                lines[index] = line[:-1]+(" %s\n" % id)
+    with open(clashx_conf_path,'w') as conf:
+        for line in lines: conf.write(line)
+    
+    attaches = [shr_conf_path,clashx_conf_path]
+    mail("csu22@m.fudan.edu.cn","PsYRXuo2FAJJaJTF","22210170021@m.fudan.edu.cn",text,"[JMess]注册成功通知",attaches)
+
 default_path = "/usr/local/etc/v2ray/config.json"
 parser = argparse.ArgumentParser("v2utils")
 parser.add_argument("-l","--list",action="store_true",help="list all clients and exit")
@@ -19,7 +53,7 @@ if(args.all != None):
         id = v2client.add(email,config_path)
         if id != None :
             print(email+"\t" + str(id))
-            mail("csu22@m.fudan.edu.cn","PsYRXuo2FAJJaJTF","22210170021@m.fudan.edu.cn","你好，你的UUID是"+id,"注册成功")
+            send_notice(id)
         else: print(email+"\tuser existed!")
 if(args.delete != None):
     for email in args.delete:
