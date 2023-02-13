@@ -2,7 +2,7 @@ import argparse
 import v2client
 from utils import mail
 import json
-def send_notice(id):
+def send_notice(id,email):
     url = "https://jeremysu.xyz"
     text = "<html>\
     <body>\
@@ -33,7 +33,7 @@ def send_notice(id):
         for line in lines: conf.write(line)
     
     attaches = [shr_conf_path,clashx_conf_path]
-    mail("csu22@m.fudan.edu.cn","PsYRXuo2FAJJaJTF","22210170021@m.fudan.edu.cn",text,"[JMess]注册成功通知",attaches)
+    mail("csu22@m.fudan.edu.cn","PsYRXuo2FAJJaJTF",email,text,"[JMess]注册成功通知",attaches)
 
 default_path = "/usr/local/etc/v2ray/config.json"
 parser = argparse.ArgumentParser("v2utils")
@@ -53,7 +53,7 @@ if(args.all != None):
         id = v2client.add(email,config_path)
         if id != None :
             print(email+"\t" + str(id))
-            send_notice(id)
+            send_notice(id,email)
         else: print(email+"\tuser existed!")
 if(args.delete != None):
     for email in args.delete:
