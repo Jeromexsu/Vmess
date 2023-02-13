@@ -17,9 +17,10 @@ def send_notice(id,email):
     shr_conf_path = "../conf/shadowrocket.json"
     with open(shr_conf_path,"r") as shrfile:
         js = json.load(shrfile)
-    js[0]["uuid"] = id
+    js["uuid"] = id
+    js["password"] = id
     with open(shr_conf_path,"w") as shrfile:
-        json.dump(js,shrfile)
+        json.dump(js,shrfile,indent=4)
     
     #write clashx
     clashx_temp_path = "../conf/JMess_ClashX_template.yaml"
@@ -46,7 +47,7 @@ args = parser.parse_args()
 print(args)
 config_path = args.config_path
 if(args.list): 
-    v2client.list()
+    v2client.list(config_path)
     exit(0)
 if(args.all != None):
     for email in args.all :
@@ -58,4 +59,4 @@ if(args.all != None):
 if(args.delete != None):
     for email in args.delete:
         v2client.invalidate(email,config_path)
-if(args.clean): v2client.clean()
+if(args.clean): v2client.clean(config_path)
