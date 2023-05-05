@@ -3,7 +3,7 @@ import v2client
 from utils import mail
 import json
 def send_notice(id,email):
-    url = "https://jeremysu.xyz"
+    url = "https://jeremysu.xyz/posts/jmess_help/"
     text = "<html>\
     <body>\
         <p>你好，你的JMess已注册成功。下方是你的uuid</p>\
