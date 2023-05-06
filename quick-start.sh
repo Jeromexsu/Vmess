@@ -1,6 +1,3 @@
-domain=$1
-port=$2
-
 # install nginx
 echo "installing nginx"
 yum install nginx 2>/dev/null >/dev/null
