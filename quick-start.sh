@@ -4,7 +4,9 @@ echo "domain=$domain, port=$port"
 # install nginx
 echo "installing nginx"
 yum -y install nginx 2>/dev/null >/dev/null
-(curl https://raw.githubusercontent.com/Jeromexsu/Vmess/main/templates/server/nginx/nginx.conf | sed -e "s/~domain/jeromesu.com/g" -e "s/~port/10053/" >/etc/nginx/nginx.conf) 2>/dev/null >/dev/null
+(curl https://raw.githubusercontent.com/Jeromexsu/Vmess/main/templates/server/nginx/nginx.conf  >/etc/nginx/nginx.conf) 2>/dev/null >/dev/null
+(curl https://raw.githubusercontent.com/Jeromexsu/Vmess/main/templates/server/nginx/server80.conf | sed -e "s/~domain/$domain/g" >/etc/nginx/conf.d/server80.conf)
+(curl https://raw.githubusercontent.com/Jeromexsu/Vmess/main/templates/server/nginx/server443.conf | sed -e "s/~domain/$domain/g" -e "s/~port/$port/" >/etc/nginx/conf.d/server443.conf)
 echo "conf for nginx: /etc/nginx/nginx.conf"
 
 # ssl
