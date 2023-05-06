@@ -3,7 +3,7 @@ port=$2
 echo "domain=$domain, port=$port"
 # install nginx
 echo "installing nginx"
-yum install nginx >/dev/null
+yum install nginx
 (curl https://raw.githubusercontent.com/Jeromexsu/Vmess/main/templates/server/nginx/nginx.conf | sed -e "s/~domain/jeromesu.com/" -e "s/~port/10053/" >/etc/nginx/nginx.conf) >/dev/null
 echo "conf for nginx: /etc/nginx/nginx.conf"
 
