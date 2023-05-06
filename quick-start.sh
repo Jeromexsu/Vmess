@@ -1,3 +1,5 @@
+domain=$1
+port=$2
 echo "domain=$domain, port=$port"
 # install nginx
 echo "installing nginx"
