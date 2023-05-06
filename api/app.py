@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import Response, stream_with_context
+import os
 
 app = Flask(__name__)
 def make_file(template_name,uuid):
@@ -13,6 +14,7 @@ def make_file(template_name,uuid):
 def make_response(template_name,uuid):
     response = Response(stream_with_context(make_file(template_name,uuid)),content_type="application/octet-stream")
     response.headers['Content-Disposition'] = 'attachment; filename=%s' % template_name
+    response.headers['content-length'] = os.stat("templates/%s" % template_name).st_size
     return response
 
 @app.route("/clashx/<uuid>")
