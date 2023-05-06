@@ -7,6 +7,8 @@ yum -y install nginx 2>/dev/null >/dev/null
 (curl https://raw.githubusercontent.com/Jeromexsu/Vmess/main/templates/server/nginx/nginx.conf  >/etc/nginx/nginx.conf) 2>/dev/null >/dev/null
 (curl https://raw.githubusercontent.com/Jeromexsu/Vmess/main/templates/server/nginx/server80.conf | sed -e "s/~domain/$domain/g" >/etc/nginx/conf.d/server80.conf)
 echo "conf for nginx: /etc/nginx/nginx.conf"
+systemctl start nginx
+echo "nginx started"
 
 # ssl
 (curl https://get.acme.sh | sh -s email=suchuanxj@gmail.com) 2>/dev/null >/dev/null
@@ -15,6 +17,7 @@ mkdir /etc/pki/nginx/private
 
 echo "applying certificates"
 .acme.sh/acme.sh --issue -d $domain --nginx 2>/dev/null >/dev/null
+
 echo "installing certificates"
 acme.sh --install-cert -d $domain --key-file /etc/pki/nginx/private/server.key --fullchain-file /etc/pki/nginx/server.crt 2>/dev/null >/dev/null
 
