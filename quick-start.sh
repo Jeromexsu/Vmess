@@ -4,7 +4,6 @@ echo "domain=$domain, port=$port"
 # allow http and https
 echo "set firewall"
 firewall-cmd --zone=public --add-service=http --add-service=https
-firewall-cmd --zone=public --add-port=$port/tcp
 # install nginx
 echo "installing nginx"
 yum -y install nginx 2>/dev/null >/dev/null

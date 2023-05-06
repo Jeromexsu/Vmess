@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import Response
+from flask import Response, stream_with_context
 
 app = Flask(__name__)
 def make_file(template_name,uuid):
@@ -7,10 +7,11 @@ def make_file(template_name,uuid):
         with open('templates/%s' % template_name,'r') as clashx_file:
             for line in clashx_file:
                 if placeholder in line: line = line.replace(placeholder,uuid)
-                yield line     
+                yield line 
+                    
 
 def make_response(template_name,uuid):
-    response = Response(make_file(template_name,uuid),content_type="application/octet-stream")
+    response = Response(stream_with_context(make_file(template_name,uuid)),content_type="application/octet-stream")
     response.headers['Content-Disposition'] = 'attachment; filename=%s' % template_name
     return response
 
