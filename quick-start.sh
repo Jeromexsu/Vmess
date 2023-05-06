@@ -2,6 +2,7 @@ domain=$1
 port=$2
 echo "domain=$domain, port=$port"
 # allow http and https
+echo "set firewall"
 firewall-cmd --zone=public --add-service=http --add-service=https
 firewall-cmd --zone=public --add-port=$port/tcp
 # install nginx
