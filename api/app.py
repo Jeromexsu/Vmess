@@ -17,12 +17,12 @@ def make_response(template_name,uuid):
     response.headers['content-length'] = os.stat("templates/%s" % template_name).st_size
     return response
 
-@app.route("/clashx/<uuid>")
+@app.route("/api/clashx/<uuid>")
 def clashx_conf(uuid):
     template_name = "clashx.yaml"
     return make_response(template_name,uuid)
 
-@app.route("/shadowrocket/<uuid>")
+@app.route("/api/shadowrocket/<uuid>")
 def shadowrocket_conf(uuid):
     return clashx_conf(uuid)
 
