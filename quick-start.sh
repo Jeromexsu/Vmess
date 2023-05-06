@@ -33,3 +33,8 @@ echo "installing v2ray"
 id=$(uuidgen)
 echo "uuid for test client: $id"
 (curl https://raw.githubusercontent.com/Jeromexsu/Vmess/main/templates/server/v2ray/conf.json | sed -e "s/~port/$port/" -e "s/~id/$id/" > /usr/local/etc/v2ray/config.json) 2>/dev/null >/dev/null
+systemctl start v2ray
+echo "v2ray started"
+echo "install finished"
+
+setenforce 0
