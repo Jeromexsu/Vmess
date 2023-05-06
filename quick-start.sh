@@ -9,12 +9,13 @@ echo "conf for nginx: /etc/nginx/nginx.conf"
 
 # ssl
 (curl https://get.acme.sh | sh -s email=suchuanxj@gmail.com) 2>/dev/null >/dev/null
-echo "applying certificates"
-.acme.sh/acme.sh --issue -d $domain --nginx 2>/dev/null >/dev/null
 mkdir /etc/pki/nginx/
 mkdir /etc/pki/nginx/private
 echo "tmp" > /etc/pki/nginx/server.crt
 echo "tmp" > "/etc/pki/nginx/private/server.key"
+
+echo "applying certificates"
+.acme.sh/acme.sh --issue -d $domain --nginx 2>/dev/null >/dev/null
 rm -f /etc/pki/nginx/server.crt
 rm -f /etc/pki/nginx/private/server.key
 echo "installing certificates"
