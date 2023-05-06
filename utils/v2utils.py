@@ -35,7 +35,13 @@ def send_notice(id,email):
     
     attaches = [shr_conf_path,clashx_conf_path]
     mail("csu22@m.fudan.edu.cn","PsYRXuo2FAJJaJTF",email,text,"[JMess]注册成功通知",attaches)
-
+def set_port(port,path):
+    with open(path,"r") as v2ray_conf_file:
+        js = json.load(v2ray_conf_file)
+    js["inbounds"][0]["port"] = port
+    with open(path,"w") as v2ray_conf_file:
+        json.dump(js,v2ray_conf_file,indent=4)
+    
 default_path = "/usr/local/etc/v2ray/config.json"
 parser = argparse.ArgumentParser("v2utils")
 parser.add_argument("-l","--list",action="store_true",help="list all clients and exit")
@@ -43,6 +49,7 @@ parser.add_argument("-a","--all",nargs="+",help="add clients",metavar="email")
 parser.add_argument("-d","--delete",nargs="+",help="invalidate clients",metavar="email")
 parser.add_argument("-c","--clean",action="store_true",help="remove all invalid clients")
 parser.add_argument("-p","--config_path",default=default_path)
+parser.add_argument("--port")
 args = parser.parse_args()
 print(args)
 config_path = args.config_path
@@ -60,3 +67,4 @@ if(args.delete != None):
     for email in args.delete:
         v2client.invalidate(email,config_path)
 if(args.clean): v2client.clean(config_path)
+if(args.port != None): set_port(args.port,config_path)

@@ -160,7 +160,7 @@ proxies:
     type: vmess
     server: jeremysu.xyz
     port: 443
-    uuid: 77769bec-d565-30e6-bef5-4e54cb6a80fd
+    uuid: 1cf93550-8eb4-3c32-a229-826cf8c1be59
     alterId: 0
     cipher: auto
     # udp: true
