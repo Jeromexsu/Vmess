@@ -25,7 +25,9 @@ echo "applying certificates"
 echo "installing certificates"
 .acme.sh/acme.sh --install-cert -d $domain --key-file /etc/pki/nginx/private/server.key --fullchain-file /etc/pki/nginx/server.crt >/dev/null
 
+echo "restart nginx"
 (curl https://raw.githubusercontent.com/Jeromexsu/Vmess/main/templates/server/nginx/server443.conf | sed -e "s/~domain/$domain/g" -e "s/~port/$port/" >/etc/nginx/conf.d/server443.conf)
+systemctl restart nginx
 
 # install v2ray
 echo "installing v2ray"
