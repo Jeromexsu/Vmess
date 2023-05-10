@@ -14,6 +14,7 @@ systemctl start nginx
 echo "nginx started"
 
 # ssl
+yum -y install tar 2>/dev/null >/dev/null
 (curl https://get.acme.sh | sh -s email=suchuanxj@gmail.com) 2>/dev/null >/dev/null
 mkdir /etc/pki/nginx/
 mkdir /etc/pki/nginx/private
