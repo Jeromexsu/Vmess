@@ -12,7 +12,8 @@ def make_file(template_name,uuid):
         return string
 
 def make_response(template_name,uuid):
-    file_bytes = make_file(template_name,uuid)
+    file = make_file(template_name,uuid)
+    file_bytes = file.encode('utf-8')
     response = Response(file_bytes,content_type="application/octet-stream")
     response.headers['Content-Disposition'] = 'attachment; filename=%s' % template_name
     response.headers['Content-Length'] = len(file_bytes)
