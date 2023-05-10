@@ -15,7 +15,7 @@ def make_file(template_name,uuid):
 def make_response(template_name,uuid):
     response = Response(make_file(template_name,uuid),content_type="application/octet-stream")
     response.headers['Content-Disposition'] = 'attachment; filename=%s' % template_name
-    response.headers['Content-Length'] = os.stat("templates/%s" % template_name).st_size
+    response.headers['Content-Length'] = len(bytes)
     return response
 
 @app.route("/api/clashx/<uuid>")
