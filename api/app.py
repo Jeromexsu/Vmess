@@ -4,12 +4,13 @@ import os
 
 app = Flask(__name__)
 def make_file(template_name,uuid):
+        bytes = b""
         placeholder = '~uuid'
         with open('templates/%s' % template_name,'r') as clashx_file:
             for line in clashx_file:
                 if placeholder in line: line = line.replace(placeholder,uuid)
-                yield line 
-                    
+                bytes += line.encode("utf-8") 
+        return bytes
 
 def make_response(template_name,uuid):
     response = Response(make_file(template_name,uuid),content_type="application/octet-stream")
